@@ -1,0 +1,1 @@
+This project listens for xDrip broadcasts and logs them to Logcat.
