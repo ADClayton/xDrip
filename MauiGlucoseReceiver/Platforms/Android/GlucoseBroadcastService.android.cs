@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Util;
+using Application = Android.App.Application;
 using MauiGlucoseReceiver.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
