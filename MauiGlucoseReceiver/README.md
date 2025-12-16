@@ -20,3 +20,13 @@ The project targets .NET 8 MAUI (`net8.0-android`, `net8.0-ios`, `net8.0-maccata
 - Shows incoming collector status messages when available.
 - Maintains a short history of recent broadcasts for quick review.
 - Persists the last received reading and status for display on subsequent launches.
+
+## Collecting logs
+
+To capture device state and broadcast receiver logs over ADB, run the PowerShell helper from the project root:
+
+```powershell
+pwsh -File ./Collect-MauiReceiverLogs.ps1 -OutputRoot ./artifacts -IncludeFullLogcat
+```
+
+The script requires the Android platform tools (`adb`) on your PATH and at least one connected device or emulator. It saves device properties, package details, a filtered logcat for `com.eveningoutpost.dexdrip.mauireceiver`, and (optionally) a tail of the full logcat into a timestamped folder under the specified output directory.
