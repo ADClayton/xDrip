@@ -95,6 +95,15 @@ public partial class GlucoseBroadcastService
             {
                 if (intent.Action.Equals(ActionNewBgEstimate, StringComparison.OrdinalIgnoreCase))
                 {
+                    _logger.LogInformation("Runtime receiver got glucose broadcast with extras: BgEstimate={Bg} Raw={Raw} Slope={Slope} SlopeName={SlopeName} Units={Units} SourceDesc={SourceDesc} SourceInfo={SourceInfo} CollectorStatus={CollectorStatus}",
+                        intent.Extras?.ContainsKey(ExtraBgEstimate) == true ? intent.GetDoubleExtra(ExtraBgEstimate, double.NaN) : null,
+                        intent.Extras?.ContainsKey(ExtraRaw) == true ? intent.GetDoubleExtra(ExtraRaw, double.NaN) : null,
+                        intent.Extras?.ContainsKey(ExtraBgSlope) == true ? intent.GetDoubleExtra(ExtraBgSlope, double.NaN) : null,
+                        intent.GetStringExtra(ExtraBgSlopeName),
+                        intent.GetStringExtra(ExtraDisplayUnits) ?? DefaultUnits,
+                        intent.GetStringExtra(ExtraSourceDescription),
+                        intent.GetStringExtra(ExtraSourceInfo),
+                        intent.GetStringExtra(ExtraCollectorStatus));
                     _service.OnReadingReceived(ParseReading(intent, _logger));
                 }
                 else if (intent.Action.Equals(ActionStatusUpdate, StringComparison.OrdinalIgnoreCase))
@@ -102,6 +111,7 @@ public partial class GlucoseBroadcastService
                     var status = intent.GetStringExtra(ExtraCollectorStatus);
                     if (!string.IsNullOrWhiteSpace(status))
                     {
+                        _logger.LogInformation("Runtime receiver got status broadcast: {Status}", status);
                         _service.OnStatusReceived(status!);
                     }
                     else
