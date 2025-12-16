@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiGlucoseReceiver.Views.MainPage"
+             Title="Glucose Broadcast Viewer">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Live readings from xDrip broadcasts" FontAttributes="Bold" FontSize="20"/> 
+            <Frame HasShadow="False" BorderColor="#dddddd" BackgroundColor="#f7f7ff" Padding="16" CornerRadius="12">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Latest" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="{Binding LatestReading.ValueMgDl, StringFormat='{0:F0}'}" FontSize="48" FontAttributes="Bold" TextColor="#512BD4" />
+                    <Label Text="{Binding LatestReading.Units}" FontSize="18" />
+                    <Label Text="{Binding LatestReading.Timestamp, StringFormat='Received {0:G}'}" FontSize="14" />
+                    <Label Text="{Binding LatestReading.SourceDescription}" FontSize="14" />
+                    <Label Text="{Binding LatestReading.SourceInfo}" FontSize="14" />
+                    <Label Text="{Binding LatestReading.SlopeName, StringFormat='Trend: {0}'}" FontSize="14" />
+                    <Label Text="{Binding LatestReading.Raw, StringFormat='Raw: {0:F0}'}" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame HasShadow="False" BorderColor="#dddddd" BackgroundColor="#f7f7ff" Padding="12" CornerRadius="12">
+                <VerticalStackLayout>
+                    <Label Text="Status" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="{Binding StatusMessage}" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Recent readings" FontAttributes="Bold" FontSize="16" />
+            <CollectionView ItemsSource="{Binding Readings}" HeightRequest="300">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding ValueMgDl, StringFormat='{0:F0}'}" FontAttributes="Bold" FontSize="18" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Timestamp, StringFormat='{0:G}'}" FontSize="12" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Units}" FontSize="12" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding SlopeName, StringFormat='Trend: {0}'}" FontSize="12" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
